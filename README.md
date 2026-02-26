@@ -268,3 +268,134 @@ response = requests.post(
 )
 
 print(response.json())
+
+9. Repository Structure
+
+azure-cost-optimizer/
+  docs/
+    architecture/
+    adr/
+    runbooks/
+  infra/
+    bicep/
+    terraform/
+    pipelines/
+  src/
+    api/
+      app/
+        main.py
+        routers/
+        services/
+        models/
+      tests/
+    ingestion/
+      connectors/
+        cost_management/
+        resource_graph/
+        advisor/
+        monitor/
+      orchestration/
+    engine/
+      rules/
+      scoring/
+    remediation/
+      runbooks/
+      approvals/
+    ui/
+  data/
+    schemas/
+  security/
+    threat-model/
+  scripts/
+  README.md
+  
+  10. Hosting Options
+
+Internal Enterprise Deployment
+	•	Private Endpoints for storage and DB
+	•	API behind Application Gateway + WAF
+	•	Internal-only access or Entra App Proxy
+	•	RBAC scoped to Management Groups
+
+External SaaS Model
+	•	Control plane tenant
+	•	Azure Lighthouse delegation
+	•	Tenant isolation in database
+	•	Strong audit logging
+	•	Customer-level RBAC
+
+⸻
+
+11. Security Model
+	•	Microsoft Entra ID authentication
+	•	Managed Identities for service access
+	•	Key Vault for secrets
+	•	Role-based access control
+	•	Audit logging for all actions
+	•	Approval workflow before remediation
+
+⸻
+
+12. Project Plan (90-Day Roadmap)
+
+Phase 1 – Foundation (Weeks 1–4)
+	•	Control plane subscription
+	•	Identity and RBAC setup
+	•	Base infrastructure deployment
+	•	Database schema
+
+Phase 2 – Data Ingestion (Weeks 5–8)
+	•	Resource Graph inventory
+	•	Cost Management ingestion
+	•	Advisor integration
+	•	Daily scheduler
+
+Phase 3 – MVP Rule Engine (Weeks 9–12)
+	•	Top 10 cost-saving rules
+	•	Savings estimation logic
+	•	Basic dashboard
+	•	CSV export
+
+Phase 4 – Workflow & Automation (Optional Extension)
+	•	Approval flow
+	•	Remediation runbooks
+	•	Notifications
+	•	ITSM integration
+
+⸻
+
+13. Future Enhancements
+	•	ML-based anomaly detection
+	•	Predictive cost forecasting
+	•	Carbon footprint analysis
+	•	Multi-cloud support
+	•	Executive reporting dashboard
+	•	Chargeback / showback engine
+
+⸻
+
+14. FinOps Alignment
+
+Supports:
+	•	Visibility
+	•	Optimization
+	•	Governance
+	•	Continuous improvement
+
+Designed for weekly FinOps review cycles and monthly executive reporting.
+
+⸻
+
+License
+
+Enterprise internal use or SaaS extension. Customize based on organization policy.
+
+---
+
+If you want, I can now generate:
+
+- A production-ready `.gitignore`
+- A full OpenAPI spec
+- A Bicep/Terraform starter
+- A backlog in Azure DevOps format
+- Or a SaaS multi-customer version with billing model built-in
