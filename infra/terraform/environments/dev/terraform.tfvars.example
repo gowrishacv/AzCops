@@ -1,0 +1,22 @@
+# =============================================================================
+# AzCops Dev Environment - Example Variable Values
+# =============================================================================
+#
+# Copy this file to terraform.tfvars and update with your actual values:
+#   cp terraform.tfvars.example terraform.tfvars
+#
+# IMPORTANT: Never commit terraform.tfvars to version control.
+#            It is already included in .gitignore.
+# =============================================================================
+
+# Azure subscription ID (required)
+subscription_id = "00000000-0000-0000-0000-000000000000"
+
+# Azure region for all resources
+location = "eastus2"
+
+# Additional tags (optional - merged with default project/environment tags)
+tags = {
+  owner      = "your-team"
+  cost_center = "engineering"
+}
