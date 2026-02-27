@@ -67,9 +67,12 @@ resource "azurerm_private_endpoint" "dfs" {
 # ---------------------------------------------------------------------------
 # Role Assignment - Grant managed identity access to storage
 # ---------------------------------------------------------------------------
+# NOTE: count/for_each conditionals require values known at plan time.
+# Since managed_identity_principal_id is a downstream module output
+# (unknown until apply), we use a plain resource with no conditional.
+# Terraform resolves the dependency graph and applies this after identity.
 
 resource "azurerm_role_assignment" "storage_blob_data_contributor" {
-  count                = var.managed_identity_principal_id != "" ? 1 : 0
   scope                = azurerm_storage_account.this.id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = var.managed_identity_principal_id

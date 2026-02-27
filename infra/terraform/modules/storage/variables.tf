@@ -35,7 +35,6 @@ variable "private_dns_zone_id" {
 variable "managed_identity_principal_id" {
   description = "The principal ID of the managed identity to grant storage access"
   type        = string
-  default     = ""
 }
 
 variable "account_tier" {
