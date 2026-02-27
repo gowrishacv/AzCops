@@ -12,45 +12,45 @@
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                        AzCops CONTROL PLANE TENANT                          │
 │                                                                             │
-│   ┌──────────────┐    ┌──────────────────────────────────────────────────┐ │
-│   │   Users /    │    │              Azure Virtual Network               │ │
-│   │  FinOps Team │    │           (10.0.0.0/16)  Private                 │ │
-│   │  Architects  │    │  ┌──────────┐  ┌──────────┐  ┌────────────────┐ │ │
-│   └──────┬───────┘    │  │ API Snet │  │  DB Snet │  │ Storage Snet   │ │ │
-│          │            │  │10.0.1.0/24  │10.0.2.0/24  │  10.0.3.0/24  │ │ │
-│          ▼            │  └────┬─────┘  └────┬─────┘  └───────┬────────┘ │ │
-│   ┌──────────────┐    │       │              │                │           │ │
-│   │  App Gateway │────┼───────▼──────────────▼────────────────▼──────────┤ │
-│   │    + WAF     │    │  ┌──────────┐  ┌──────────┐  ┌────────────────┐ │ │
-│   └──────────────┘    │  │FastAPI   │  │PostgreSQL│  │ Data Lake Gen2 │ │ │
-│                       │  │Container │  │Flex Srv  │  │  (raw layer)   │ │ │
-│   ┌──────────────┐    │  │App       │  │ v16      │  │                │ │ │
-│   │  Entra ID    │    │  └──────────┘  └──────────┘  └────────────────┘ │ │
-│   │  (Auth)      │    │                                                   │ │
-│   └──────────────┘    │  ┌──────────┐  ┌──────────────────────────────┐  │ │
-│                       │  │Key Vault │  │  Container Apps Jobs          │  │ │
-│   ┌──────────────┐    │  │(secrets) │  │  (ingestion scheduler)        │  │ │
-│   │  Managed     │    │  └──────────┘  └──────────────────────────────┘  │ │
-│   │  Identity    │    └──────────────────────────────────────────────────┘ │
+│   ┌──────────────┐    ┌──────────────────────────────────────────────────┐  │
+│   │   Users /    │    │              Azure Virtual Network               │  │
+│   │  FinOps Team │    │           (10.0.0.0/16)  Private                 │  │
+│   │  Architects  │    │  ┌───────────┐  ┌───────────┐  ┌────────────────┐│  │
+│   └──────┬───────┘    │  │ API Snet  │  │  DB Snet  │  │ Storage Snet   ││  │
+│          │            │  │10.0.1.0/24│  │10.0.2.0/24│  │  10.0.3.0/24   ││  │
+│          ▼            │  └────┬──────┘  └────┬──────┘  └───────┬────────┘│  │
+│   ┌──────────────┐    │       │              │                 │         │  │
+│   │  App Gateway │────┼───────▼──────────────▼─────────────────▼─────────┤  │
+│   │    + WAF     │    │  ┌──────────┐  ┌──────────┐  ┌────────────────┐  │  │
+│   └──────────────┘    │  │FastAPI   │  │PostgreSQL│  │ Data Lake Gen2 │  │  │
+│                       │  │Container │  │Flex Srv  │  │  (raw layer)   │  │  │
+│   ┌──────────────┐    │  │App       │  │ v16      │  │                │  │  │
+│   │  Entra ID    │    │  └──────────┘  └──────────┘  └────────────────┘  │  │
+│   │  (Auth)      │    │                                                  │  │
+│   └──────────────┘    │  ┌──────────┐  ┌──────────────────────────────┐  │  │
+│                       │  │Key Vault │  │  Container Apps Jobs         │  │  │
+│   ┌──────────────┐    │  │(secrets) │  │  (ingestion scheduler)       │  │  │
+│   │  Managed     │    │  └──────────┘  └──────────────────────────────┘  │  │
+│   │  Identity    │    └──────────────────────────────────────────────────┘  │
 │   └──────────────┘                                                          │
 └─────────────────────────────────────────────────────────────────────────────┘
          │  Azure Lighthouse / Management Group RBAC
          ▼
 ┌─────────────────────────────────────────────────────────┐
-│              CUSTOMER / MANAGED TENANTS                  │
-│                                                          │
+│              CUSTOMER / MANAGED TENANTS                 │
+│                                                         │
 │  ┌─────────────────┐    ┌─────────────────┐             │
-│  │  Tenant A       │    │  Tenant B (MSP)  │   ...      │
-│  │  ├─ Sub-001     │    │  ├─ Sub-010      │            │
-│  │  ├─ Sub-002     │    │  ├─ Sub-011      │            │
-│  │  └─ Sub-003     │    │  └─ Sub-012      │            │
+│  │  Tenant A       │    │  Tenant B (MSP) │   ...       │
+│  │  ├─ Sub-001     │    │  ├─ Sub-010     │             │
+│  │  ├─ Sub-002     │    │  ├─ Sub-011     │             │
+│  │  └─ Sub-003     │    │  └─ Sub-012     │             │
 │  └─────────────────┘    └─────────────────┘             │
-│                                                          │
-│  APIs consumed (read-only):                              │
-│  • Azure Resource Graph                                  │
-│  • Cost Management Query API                             │
-│  • Azure Advisor                                         │
-│  • Azure Monitor Metrics                                 │
+│                                                         │
+│  APIs consumed (read-only):                             │
+│  • Azure Resource Graph                                 │
+│  • Cost Management Query API                            │
+│  • Azure Advisor                                        │
+│  • Azure Monitor Metrics                                │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -80,11 +80,11 @@ VNet: azcops-dev-vnet (10.0.0.0/16)
 
 ### 2.2 Private Endpoints
 
-| Resource | Private DNS Zone | Subnet |
-|----------|-----------------|--------|
-| PostgreSQL Flexible Server | `privatelink.postgres.database.azure.com` | db |
-| Azure Key Vault | `privatelink.vaultcore.azure.net` | storage |
-| Data Lake Gen2 | `privatelink.dfs.core.windows.net` | storage |
+| Resource                   | Private DNS Zone                          | Subnet  |
+| -------------------------- | ----------------------------------------- | ------- |
+| PostgreSQL Flexible Server | `privatelink.postgres.database.azure.com` | db      |
+| Azure Key Vault            | `privatelink.vaultcore.azure.net`         | storage |
+| Data Lake Gen2             | `privatelink.dfs.core.windows.net`        | storage |
 
 All services have `public_network_access = Disabled`. Zero internet exposure.
 
@@ -95,7 +95,7 @@ Internet
     │
     ▼ HTTPS (443)
 ┌───────────────────────────────┐
-│  Application Gateway + WAF   │  ← TLS termination, WAF rules, DDoS protection
+│  Application Gateway + WAF    │  ← TLS termination, WAF rules, DDoS protection
 │  (Public IP — only entry)     │
 └───────────────┬───────────────┘
                 │ HTTP (internal)
@@ -145,13 +145,13 @@ Container App / Container App Job
 
 ### 3.3 RBAC Assignments per Scope
 
-| Role | Scope | Assigned To | Purpose |
-|------|-------|-------------|---------|
-| Reader | Management Group / Subscription | Managed Identity | Resource inventory |
-| Cost Management Reader | Subscription | Managed Identity | Cost data access |
-| Storage Blob Data Contributor | Storage Account | Managed Identity | Raw data writes |
-| Key Vault Secrets User | Key Vault | Managed Identity | Secret reads |
-| Key Vault Secrets Officer | Key Vault | Deployer SP | CI/CD secret writes |
+| Role                          | Scope                           | Assigned To      | Purpose             |
+| ----------------------------- | ------------------------------- | ---------------- | ------------------- |
+| Reader                        | Management Group / Subscription | Managed Identity | Resource inventory  |
+| Cost Management Reader        | Subscription                    | Managed Identity | Cost data access    |
+| Storage Blob Data Contributor | Storage Account                 | Managed Identity | Raw data writes     |
+| Key Vault Secrets User        | Key Vault                       | Managed Identity | Secret reads        |
+| Key Vault Secrets Officer     | Key Vault                       | Deployer SP      | CI/CD secret writes |
 
 **Principle:** Never assign `Contributor` at subscription scope. Least privilege always.
 
@@ -231,7 +231,7 @@ Azure APIs (Cost Mgmt, ARG, Advisor, Monitor)
 │  Tables: tenants, subscriptions, resources,         │
 │          costs_daily, recommendations, audit_logs   │
 │  Indexed for queries, reporting, rule engine        │
-│  Upsert idempotent (safe to re-run ingestion)      │
+│  Upsert idempotent (safe to re-run ingestion)       │
 └─────────────────────────────────────────────────────┘
 ```
 
@@ -253,13 +253,13 @@ Azure APIs (Cost Mgmt, ARG, Advisor, Monitor)
 
 ### 5.3 Data Retention Policy
 
-| Layer | Retention | Location |
-|-------|-----------|----------|
-| Raw JSON snapshots | 90 days | Data Lake Gen2 |
-| Curated cost data | 13 months (rolling) | PostgreSQL |
-| Curated resources | Latest snapshot + 30 days history | PostgreSQL |
-| Recommendations | Indefinite (lifecycle tracked) | PostgreSQL |
-| Audit logs | 7 years (compliance) | PostgreSQL |
+| Layer              | Retention                         | Location       |
+| ------------------ | --------------------------------- | -------------- |
+| Raw JSON snapshots | 90 days                           | Data Lake Gen2 |
+| Curated cost data  | 13 months (rolling)               | PostgreSQL     |
+| Curated resources  | Latest snapshot + 30 days history | PostgreSQL     |
+| Recommendations    | Indefinite (lifecycle tracked)    | PostgreSQL     |
+| Audit logs         | 7 years (compliance)              | PostgreSQL     |
 
 ---
 
@@ -272,7 +272,7 @@ HTTP Request
     │
     ▼
 ┌─────────────────────────────────────────┐
-│  Middleware Stack                        │
+│  Middleware Stack                       │
 │  1. CorrelationIdMiddleware             │  Injects X-Correlation-ID
 │  2. RequestLoggingMiddleware            │  Logs duration_ms, status
 │  3. CORSMiddleware                      │  Entra-authenticated origins
@@ -281,24 +281,24 @@ HTTP Request
                        ▼
 ┌─────────────────────────────────────────┐
 │  Router (routers/)                      │  HTTP → validated Pydantic schema
-│  • No business logic here              │
-│  • Calls Service layer only            │
+│  • No business logic here               │
+│  • Calls Service layer only             │
 └──────────────────────┬──────────────────┘
                        │
                        ▼
 ┌─────────────────────────────────────────┐
 │  Service (services/)                    │  Business logic, validation
-│  • Raises HTTPException on errors      │
-│  • Calls Repository layer only         │
-│  • Logs with operation_name            │
+│  • Raises HTTPException on errors       │
+│  • Calls Repository layer only          │
+│  • Logs with operation_name             │
 └──────────────────────┬──────────────────┘
                        │
                        ▼
 ┌─────────────────────────────────────────┐
 │  Repository (repositories/)             │  DB queries only, tenant-scoped
-│  • BaseRepository[T] generic CRUD      │
-│  • All queries include tenant_id       │
-│  • Returns ORM models                  │
+│  • BaseRepository[T] generic CRUD       │
+│  • All queries include tenant_id        │
+│  • Returns ORM models                   │
 └──────────────────────┬──────────────────┘
                        │
                        ▼
@@ -320,18 +320,18 @@ HTTP Request
 
 ### 7.1 Security Controls by Layer
 
-| Layer | Control | Implementation |
-|-------|---------|---------------|
-| Network perimeter | WAF + DDoS | App Gateway WAF v2 (OWASP rules) |
-| API auth | JWT validation | Entra ID JWKS, RS256, audience + issuer checks |
-| API authz | RBAC | Roles extracted from JWT `roles` claim |
-| Service auth | Managed Identity | No secrets, no passwords for service-to-service |
-| Secrets | Key Vault | All secrets in KV; never in code or env files |
-| Data encryption | At rest | Azure default encryption (AES-256) |
-| Data encryption | In transit | TLS 1.2+ enforced on all services |
-| Multi-tenancy | Row-level | `tenant_id` on every DB table, extracted from JWT |
-| Audit | Immutable log | `audit_logs` table, every action recorded |
-| Remediation | Approval gate | High-risk actions require approval before execution |
+| Layer             | Control          | Implementation                                      |
+| ----------------- | ---------------- | --------------------------------------------------- |
+| Network perimeter | WAF + DDoS       | App Gateway WAF v2 (OWASP rules)                    |
+| API auth          | JWT validation   | Entra ID JWKS, RS256, audience + issuer checks      |
+| API authz         | RBAC             | Roles extracted from JWT `roles` claim              |
+| Service auth      | Managed Identity | No secrets, no passwords for service-to-service     |
+| Secrets           | Key Vault        | All secrets in KV; never in code or env files       |
+| Data encryption   | At rest          | Azure default encryption (AES-256)                  |
+| Data encryption   | In transit       | TLS 1.2+ enforced on all services                   |
+| Multi-tenancy     | Row-level        | `tenant_id` on every DB table, extracted from JWT   |
+| Audit             | Immutable log    | `audit_logs` table, every action recorded           |
+| Remediation       | Approval gate    | High-risk actions require approval before execution |
 
 ### 7.2 Secrets Management
 
@@ -352,15 +352,15 @@ All secrets:
 
 ### 7.3 Threat Model Summary
 
-| Threat | Mitigation |
-|--------|-----------|
-| Credential theft | Managed Identity — no static credentials exist |
-| Cross-tenant data leak | `tenant_id` enforced at DB + JWT layer |
-| Injection attacks | Pydantic validation + parameterised SQLAlchemy queries |
-| Privilege escalation | Least-privilege RBAC; no Contributor at sub scope |
-| Data exfiltration | Private endpoints; no public storage access |
-| Unauthorised API access | JWT + audience/issuer validation on every endpoint |
-| Prompt injection (if AI features added) | Human approval gates before any remediation |
+| Threat                                  | Mitigation                                             |
+| --------------------------------------- | ------------------------------------------------------ |
+| Credential theft                        | Managed Identity — no static credentials exist         |
+| Cross-tenant data leak                  | `tenant_id` enforced at DB + JWT layer                 |
+| Injection attacks                       | Pydantic validation + parameterised SQLAlchemy queries |
+| Privilege escalation                    | Least-privilege RBAC; no Contributor at sub scope      |
+| Data exfiltration                       | Private endpoints; no public storage access            |
+| Unauthorised API access                 | JWT + audience/issuer validation on every endpoint     |
+| Prompt injection (if AI features added) | Human approval gates before any remediation            |
 
 ---
 
@@ -382,15 +382,15 @@ Shipped to: **Application Insights** (via OpenTelemetry SDK — Phase 3+)
 
 ### 8.2 Key Metrics to Track
 
-| Metric | Description | Alert Threshold |
-|--------|-------------|----------------|
-| `ingestion.duration_ms` | Full ingestion job duration | > 30 min |
-| `ingestion.subscriptions_failed` | Failed subscription count | > 0 |
-| `rule_engine.rules_evaluated` | Rules run per cycle | < 10 |
-| `recommendations.savings_identified` | Total monthly savings found | Informational |
-| `api.request_duration_ms` | p95 API latency | > 2000ms |
-| `api.error_rate` | 5xx rate | > 1% |
-| `cost_management.throttle_429` | Azure API throttle events | > 5/hour |
+| Metric                               | Description                 | Alert Threshold |
+| ------------------------------------ | --------------------------- | --------------- |
+| `ingestion.duration_ms`              | Full ingestion job duration | > 30 min        |
+| `ingestion.subscriptions_failed`     | Failed subscription count   | > 0             |
+| `rule_engine.rules_evaluated`        | Rules run per cycle         | < 10            |
+| `recommendations.savings_identified` | Total monthly savings found | Informational   |
+| `api.request_duration_ms`            | p95 API latency             | > 2000ms        |
+| `api.error_rate`                     | 5xx rate                    | > 1%            |
+| `cost_management.throttle_429`       | Azure API throttle events   | > 5/hour        |
 
 ### 8.3 Health Endpoint
 
@@ -408,11 +408,11 @@ Used by App Gateway health probes and Container App liveness checks.
 
 ### 9.1 Environments
 
-| Environment | Purpose | Sizing | Access |
-|-------------|---------|--------|--------|
-| `dev` | Local development + CI | B_Standard_B1ms PG, LRS storage | Developers |
-| `test` | Integration testing | B_Standard_B2ms PG, LRS storage | CI/CD |
-| `prod` | Live workloads | GP_Standard_D4s_v3 PG, ZRS storage | Ops only |
+| Environment | Purpose                | Sizing                             | Access     |
+| ----------- | ---------------------- | ---------------------------------- | ---------- |
+| `dev`       | Local development + CI | B_Standard_B1ms PG, LRS storage    | Developers |
+| `test`      | Integration testing    | B_Standard_B2ms PG, LRS storage    | CI/CD      |
+| `prod`      | Live workloads         | GP_Standard_D4s_v3 PG, ZRS storage | Ops only   |
 
 ### 9.2 CI/CD Pipeline (infra/pipelines/)
 
@@ -432,11 +432,11 @@ Git Push → PR
 
 ### 9.3 Container App Configuration
 
-| App | Replicas | CPU | Memory | Trigger |
-|-----|----------|-----|--------|---------|
-| `azcops-api` | 1–5 (auto-scale on HTTP) | 0.5 | 1Gi | HTTP |
-| `azcops-ingestion-full` | 1 | 2.0 | 4Gi | Cron 0 2 * * * |
-| `azcops-ingestion-incremental` | 1 | 1.0 | 2Gi | Cron 0 * * * * |
+| App                            | Replicas                 | CPU | Memory | Trigger        |
+| ------------------------------ | ------------------------ | --- | ------ | -------------- |
+| `azcops-api`                   | 1–5 (auto-scale on HTTP) | 0.5 | 1Gi    | HTTP           |
+| `azcops-ingestion-full`        | 1                        | 2.0 | 4Gi    | Cron 0 2 * * * |
+| `azcops-ingestion-incremental` | 1                        | 1.0 | 2Gi    | Cron 0 * * * * |
 
 ---
 
@@ -492,15 +492,15 @@ src/ui/src/
 
 ## 11. Architecture Decision Records (ADRs)
 
-| ADR | Decision | Rationale |
-|-----|----------|-----------|
-| ADR-001 | FastAPI over .NET | Python Azure SDK maturity; async-first; team velocity |
-| ADR-002 | PostgreSQL over Azure SQL | Open-source; asyncpg support; JSONB for tags/metadata |
-| ADR-003 | Terraform over Bicep | Multi-environment state management; team familiarity |
-| ADR-004 | Container Apps over AKS | Lower operational overhead; auto-scaling; job support |
-| ADR-005 | Managed Identity over SPs | No credential rotation; no secret leakage risk |
-| ADR-006 | Two-layer storage (DL + PG) | Raw immutability for audit; curated for fast queries |
-| ADR-007 | tenant_id on every table | Row-level isolation without RLS complexity |
-| ADR-008 | Async-first Python | 100+ subscriptions; I/O-bound workload; throughput |
-| ADR-009 | nextLink + skipToken pagination | Azure API standard; avoids data loss on large datasets |
-| ADR-010 | Approval gate for remediation | Regulatory compliance; prevents unintended production changes |
+| ADR     | Decision                        | Rationale                                                     |
+| ------- | ------------------------------- | ------------------------------------------------------------- |
+| ADR-001 | FastAPI over .NET               | Python Azure SDK maturity; async-first; team velocity         |
+| ADR-002 | PostgreSQL over Azure SQL       | Open-source; asyncpg support; JSONB for tags/metadata         |
+| ADR-003 | Terraform over Bicep            | Multi-environment state management; team familiarity          |
+| ADR-004 | Container Apps over AKS         | Lower operational overhead; auto-scaling; job support         |
+| ADR-005 | Managed Identity over SPs       | No credential rotation; no secret leakage risk                |
+| ADR-006 | Two-layer storage (DL + PG)     | Raw immutability for audit; curated for fast queries          |
+| ADR-007 | tenant_id on every table        | Row-level isolation without RLS complexity                    |
+| ADR-008 | Async-first Python              | 100+ subscriptions; I/O-bound workload; throughput            |
+| ADR-009 | nextLink + skipToken pagination | Azure API standard; avoids data loss on large datasets        |
+| ADR-010 | Approval gate for remediation   | Regulatory compliance; prevents unintended production changes |
