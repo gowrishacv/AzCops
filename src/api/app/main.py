@@ -8,7 +8,7 @@ from app.core.config import settings
 from app.core.logging import setup_logging
 from app.middleware.correlation import CorrelationIdMiddleware
 from app.middleware.request_logging import RequestLoggingMiddleware
-from app.routers import health, tenants, subscriptions
+from app.routers import health, tenants, subscriptions, resources, costs, ingestion
 
 
 @asynccontextmanager
@@ -39,3 +39,6 @@ app.add_middleware(
 app.include_router(health.router)
 app.include_router(tenants.router, prefix=settings.api_prefix)
 app.include_router(subscriptions.router, prefix=settings.api_prefix)
+app.include_router(resources.router, prefix=settings.api_prefix)
+app.include_router(costs.router, prefix=settings.api_prefix)
+app.include_router(ingestion.router, prefix=settings.api_prefix)
