@@ -51,6 +51,7 @@ out/
 *.key
 *.cert
 credentials.json
+infra/scripts/github-secrets.env
 
 # Docker
 docker-compose.override.yml
