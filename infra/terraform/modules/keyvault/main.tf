@@ -19,7 +19,9 @@ resource "azurerm_key_vault" "this" {
   sku_name                      = "standard"
   soft_delete_retention_days    = var.soft_delete_retention_days
   purge_protection_enabled      = var.purge_protection_enabled
-  public_network_access_enabled = false
+  # true  → dev:  Terraform writes secrets from the local machine (outside VNet)
+  # false → prod: Terraform runs from a private CI runner inside the VNet
+  public_network_access_enabled = var.enable_public_access
 
   # Allow the deploying identity to manage the vault
   access_policy {

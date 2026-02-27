@@ -18,7 +18,9 @@ resource "azurerm_storage_account" "this" {
   account_kind                  = "StorageV2"
   is_hns_enabled                = true # Enable Data Lake Gen2
   min_tls_version               = "TLS1_2"
-  public_network_access_enabled = false
+  # true  → dev:  Terraform creates the raw filesystem from the local machine
+  # false → prod: Terraform runs from a private CI runner inside the VNet
+  public_network_access_enabled = var.enable_public_access
 
   blob_properties {
     delete_retention_policy {

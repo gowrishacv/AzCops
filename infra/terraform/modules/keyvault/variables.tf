@@ -55,6 +55,16 @@ variable "region_short" {
   type        = string
 }
 
+variable "enable_public_access" {
+  description = <<-EOT
+    Allow public network access to the Key Vault.
+    Set true for dev (Terraform runs from local machine outside the VNet).
+    Set false for prod (Terraform runs from a private CI runner inside the VNet).
+  EOT
+  type        = bool
+  default     = false
+}
+
 variable "tags" {
   description = "Tags to apply to all Key Vault resources"
   type        = map(string)

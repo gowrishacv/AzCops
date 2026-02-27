@@ -165,7 +165,9 @@ module "keyvault" {
   private_dns_zone_id        = module.networking.keyvault_dns_zone_id
   managed_identity_object_id = module.identity.principal_id
   soft_delete_retention_days = 90
-  purge_protection_enabled   = false # Set to false for dev to allow easy cleanup
+  purge_protection_enabled   = false        # false in dev — allows easy teardown
+  enable_public_access       = true         # true in dev — Terraform runs locally outside the VNet
+                                            # set false in prod (use private CI runner inside VNet)
   tags                       = local.common_tags
 
   depends_on = [module.networking, module.identity]
@@ -187,7 +189,9 @@ module "storage" {
   private_dns_zone_id           = module.networking.dfs_dns_zone_id
   managed_identity_principal_id = module.identity.principal_id
   account_tier                  = "Standard"
-  replication_type              = "LRS" # Dev uses locally redundant storage
+  replication_type              = "LRS"   # Dev uses locally redundant storage
+  enable_public_access          = true    # true in dev — Terraform runs locally outside the VNet
+                                          # set false in prod (use private CI runner inside VNet)
   tags                          = local.common_tags
 
   depends_on = [module.networking, module.identity]
