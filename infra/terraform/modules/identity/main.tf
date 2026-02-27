@@ -5,10 +5,11 @@
 
 # ---------------------------------------------------------------------------
 # User-Assigned Managed Identity
+# CAF: id-{workload}-{env}-{region}
 # ---------------------------------------------------------------------------
 
 resource "azurerm_user_assigned_identity" "this" {
-  name                = "${var.project}-${var.environment}-identity"
+  name                = "id-${var.project}-${var.environment}-${var.region_short}"
   resource_group_name = var.resource_group_name
   location            = var.location
   tags                = var.tags
@@ -18,7 +19,7 @@ resource "azurerm_user_assigned_identity" "this" {
 # Role Assignments at Subscription Scope
 # ---------------------------------------------------------------------------
 
-# Reader role - allows reading all Azure resources
+# Reader role - allows reading all Azure resources (also covers Resource Graph)
 resource "azurerm_role_assignment" "reader" {
   scope                = "/subscriptions/${var.subscription_id}"
   role_definition_name = "Reader"
@@ -30,15 +31,4 @@ resource "azurerm_role_assignment" "cost_management_reader" {
   scope                = "/subscriptions/${var.subscription_id}"
   role_definition_name = "Cost Management Reader"
   principal_id         = azurerm_user_assigned_identity.this.principal_id
-}
-
-# Resource Graph Reader - allows querying Azure Resource Graph
-resource "azurerm_role_assignment" "resource_graph_reader" {
-  scope                = "/subscriptions/${var.subscription_id}"
-  role_definition_name = "Reader"
-  principal_id         = azurerm_user_assigned_identity.this.principal_id
-
-  # This is scoped specifically for Resource Graph queries; the Reader role
-  # at subscription level is sufficient for Resource Graph access. If a
-  # dedicated custom role is needed, replace with a custom role definition.
 }

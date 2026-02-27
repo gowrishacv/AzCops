@@ -27,6 +27,11 @@ variable "subscription_id" {
   type        = string
 }
 
+variable "region_short" {
+  description = "Short region code for CAF resource naming (e.g. weu, eus2)"
+  type        = string
+}
+
 variable "tags" {
   description = "Tags to apply to all identity resources"
   type        = map(string)

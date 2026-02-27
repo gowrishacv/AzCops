@@ -1,16 +1,18 @@
 ###############################################################################
 # Key Vault Module
 # Creates Azure Key Vault with private endpoint and managed identity access
+# CAF: kv-{workload}-{env}-{region}  (max 24 chars, alphanumeric + hyphens)
 ###############################################################################
 
 data "azurerm_client_config" "current" {}
 
 # ---------------------------------------------------------------------------
 # Key Vault
+# kv-azcops-dev-weu = 17 chars (within 3-24 char limit)
 # ---------------------------------------------------------------------------
 
 resource "azurerm_key_vault" "this" {
-  name                          = "${var.project}-${var.environment}-kv"
+  name                          = "kv-${var.project}-${var.environment}-${var.region_short}"
   location                      = var.location
   resource_group_name           = var.resource_group_name
   tenant_id                     = data.azurerm_client_config.current.tenant_id
@@ -63,10 +65,11 @@ resource "azurerm_key_vault" "this" {
 
 # ---------------------------------------------------------------------------
 # Private Endpoint
+# CAF: pep-{resource}-{workload}-{env}
 # ---------------------------------------------------------------------------
 
 resource "azurerm_private_endpoint" "keyvault" {
-  name                = "${var.project}-${var.environment}-kv-pe"
+  name                = "pep-kv-${var.project}-${var.environment}"
   location            = var.location
   resource_group_name = var.resource_group_name
   subnet_id           = var.subnet_id

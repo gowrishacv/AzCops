@@ -74,6 +74,11 @@ variable "availability_zone" {
   default     = "1"
 }
 
+variable "region_short" {
+  description = "Short region code for CAF resource naming (e.g. weu, eus2)"
+  type        = string
+}
+
 variable "tags" {
   description = "Tags to apply to all PostgreSQL resources"
   type        = map(string)

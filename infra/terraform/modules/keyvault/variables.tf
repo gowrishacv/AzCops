@@ -50,6 +50,11 @@ variable "purge_protection_enabled" {
   default     = true
 }
 
+variable "region_short" {
+  description = "Short region code for CAF resource naming (e.g. weu, eus2)"
+  type        = string
+}
+
 variable "tags" {
   description = "Tags to apply to all Key Vault resources"
   type        = map(string)

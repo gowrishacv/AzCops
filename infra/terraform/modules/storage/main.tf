@@ -1,6 +1,8 @@
 ###############################################################################
 # Storage Module
 # Creates Azure Storage Account with Data Lake Gen2 and private endpoint
+# CAF: st{workload}{env}{region} — NO hyphens, all lowercase, max 24 chars
+#   stazcopsdevweu = 14 chars (within limit)
 ###############################################################################
 
 # ---------------------------------------------------------------------------
@@ -8,7 +10,7 @@
 # ---------------------------------------------------------------------------
 
 resource "azurerm_storage_account" "this" {
-  name                          = replace("${var.project}${var.environment}sa", "-", "")
+  name                          = replace("st${var.project}${var.environment}${var.region_short}", "-", "")
   resource_group_name           = var.resource_group_name
   location                      = var.location
   account_tier                  = var.account_tier
@@ -42,10 +44,11 @@ resource "azurerm_storage_data_lake_gen2_filesystem" "raw" {
 
 # ---------------------------------------------------------------------------
 # Private Endpoint for DFS (Data Lake Storage)
+# CAF: pep-{resource}-{workload}-{env}
 # ---------------------------------------------------------------------------
 
 resource "azurerm_private_endpoint" "dfs" {
-  name                = "${var.project}-${var.environment}-dfs-pe"
+  name                = "pep-dfs-${var.project}-${var.environment}"
   location            = var.location
   resource_group_name = var.resource_group_name
   subnet_id           = var.subnet_id
