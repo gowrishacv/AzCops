@@ -1,11 +1,14 @@
 # AI_GUIDELINES.md
 ## Azure Enterprise Cost Optimization Platform
 
+Build and operate a secure, multi-tenant Azure FinOps platform that continuously discovers savings opportunities, prioritizes actionable recommendations, and supports governed remediation across enterprise subscriptions and tenants.
+
+
 This document defines strict implementation rules for AI-generated code and architectural decisions.
 
 AI must follow these guidelines when generating code, infrastructure, documentation, or automation.
 
-This is an enterprise-grade multi-tenant Azure FinOps platform.  
+This is an enterprise-grade multi-tenant Azure FinOps platform.
 Not a demo project. Not a prototype. Production-ready standards only.
 
 ---
@@ -333,7 +336,3 @@ This platform is evolving toward:
 - Fully automated remediation with human oversight
 
 All designs must support that evolution.
-
----
-
-End of AI Guidelines.
