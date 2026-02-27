@@ -1,0 +1,40 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: azcops-postgres
+    environment:
+      POSTGRES_USER: azcops
+      POSTGRES_PASSWORD: azcops_dev_password
+      POSTGRES_DB: azcops
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U azcops"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ./src/api
+      dockerfile: Dockerfile
+    container_name: azcops-api
+    environment:
+      DATABASE_URL: postgresql+asyncpg://azcops:azcops_dev_password@postgres:5432/azcops
+      LOG_LEVEL: DEBUG
+      CORS_ORIGINS: '["http://localhost:3000"]'
+      AZURE_TENANT_ID: ""
+      AZURE_CLIENT_ID: ""
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./src/api:/app
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
+volumes:
+  pgdata:
