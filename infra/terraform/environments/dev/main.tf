@@ -1,6 +1,8 @@
 ###############################################################################
 # AzCops - Dev Environment
 # Orchestrates all modules for the development environment
+# Naming follows Microsoft Cloud Adoption Framework (CAF):
+# https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming
 ###############################################################################
 
 terraform {
@@ -32,8 +34,27 @@ provider "azurerm" {
 # ---------------------------------------------------------------------------
 
 locals {
-  project     = "azcops"
-  environment = "dev"
+  # Normalise to lowercase so CAF names are always valid regardless of
+  # the casing used in the tfvars file.
+  project     = lower(var.project_name)
+  environment = lower(var.environment)
+
+  # CAF region abbreviation lookup
+  # https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming
+  region_short = lookup({
+    "westeurope"    = "weu"
+    "northeurope"   = "neu"
+    "eastus"        = "eus"
+    "eastus2"       = "eus2"
+    "westus2"       = "wus2"
+    "uksouth"       = "uks"
+    "ukwest"        = "ukw"
+    "australiaeast" = "aue"
+    "southeastasia" = "sea"
+  }, var.location, replace(var.location, " ", ""))
+
+  # CAF name suffix shared by all modules: {workload}-{env}-{region}
+  name_suffix = "${local.project}-${local.environment}-${local.region_short}"
 
   common_tags = merge(var.tags, {
     project     = local.project
@@ -59,7 +80,8 @@ resource "random_password" "postgresql" {
 module "resource_group" {
   source = "../../modules/resource_group"
 
-  name     = "${local.project}-${local.environment}-rg"
+  # CAF: rg-{workload}-{env}-{region}
+  name     = "rg-${local.name_suffix}"
   location = var.location
   tags     = local.common_tags
 }
@@ -76,6 +98,7 @@ module "identity" {
   location            = var.location
   resource_group_name = module.resource_group.name
   subscription_id     = var.subscription_id
+  region_short        = local.region_short
   tags                = local.common_tags
 }
 
@@ -90,6 +113,7 @@ module "networking" {
   environment         = local.environment
   location            = var.location
   resource_group_name = module.resource_group.name
+  region_short        = local.region_short
   vnet_address_space  = "10.0.0.0/16"
   subnet_prefixes = {
     api     = "10.0.1.0/24"
@@ -111,6 +135,7 @@ module "postgresql" {
   environment                  = local.environment
   location                     = var.location
   resource_group_name          = module.resource_group.name
+  region_short                 = local.region_short
   delegated_subnet_id          = module.networking.db_subnet_id
   private_dns_zone_id          = module.networking.postgresql_dns_zone_id
   administrator_login          = "psqladmin"
@@ -135,11 +160,14 @@ module "keyvault" {
   environment                = local.environment
   location                   = var.location
   resource_group_name        = module.resource_group.name
+  region_short               = local.region_short
   subnet_id                  = module.networking.api_subnet_id
   private_dns_zone_id        = module.networking.keyvault_dns_zone_id
   managed_identity_object_id = module.identity.principal_id
   soft_delete_retention_days = 90
-  purge_protection_enabled   = false # Set to false for dev to allow easy cleanup
+  purge_protection_enabled   = false        # false in dev — allows easy teardown
+  enable_public_access       = true         # true in dev — Terraform runs locally outside the VNet
+                                            # set false in prod (use private CI runner inside VNet)
   tags                       = local.common_tags
 
   depends_on = [module.networking, module.identity]
@@ -156,11 +184,14 @@ module "storage" {
   environment                   = local.environment
   location                      = var.location
   resource_group_name           = module.resource_group.name
+  region_short                  = local.region_short
   subnet_id                     = module.networking.storage_subnet_id
   private_dns_zone_id           = module.networking.dfs_dns_zone_id
   managed_identity_principal_id = module.identity.principal_id
   account_tier                  = "Standard"
-  replication_type              = "LRS" # Dev uses locally redundant storage
+  replication_type              = "LRS"   # Dev uses locally redundant storage
+  enable_public_access          = true    # true in dev — Terraform runs locally outside the VNet
+                                          # set false in prod (use private CI runner inside VNet)
   tags                          = local.common_tags
 
   depends_on = [module.networking, module.identity]

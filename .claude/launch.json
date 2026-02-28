@@ -1,0 +1,36 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "colima",
+      "runtimeExecutable": "/bin/bash",
+      "runtimeArgs": ["-c", "cd /tmp; colima start --cpu 2 --memory 4 2>/dev/null; exec tail -f /dev/null"],
+      "port": 2376
+    },
+    {
+      "name": "postgres",
+      "runtimeExecutable": "docker",
+      "runtimeArgs": [
+        "run", "--rm", "--name", "azcops-postgres",
+        "-e", "POSTGRES_USER=azcops",
+        "-e", "POSTGRES_PASSWORD=azcops_dev_password",
+        "-e", "POSTGRES_DB=azcops",
+        "-p", "5432:5432",
+        "postgres:16-alpine"
+      ],
+      "port": 5432
+    },
+    {
+      "name": "api",
+      "runtimeExecutable": "uvicorn",
+      "runtimeArgs": ["app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"],
+      "port": 8000
+    },
+    {
+      "name": "ui",
+      "runtimeExecutable": "/bin/bash",
+      "runtimeArgs": ["-c", "cd '/Users/gowrisha/Library/Mobile Documents/com~apple~CloudDocs/LifeOS/01_Projects/Active/AzCops/.claude/worktrees/romantic-hoover/src/ui' && npm run dev"],
+      "port": 3000
+    }
+  ]
+}

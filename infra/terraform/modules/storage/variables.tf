@@ -35,7 +35,6 @@ variable "private_dns_zone_id" {
 variable "managed_identity_principal_id" {
   description = "The principal ID of the managed identity to grant storage access"
   type        = string
-  default     = ""
 }
 
 variable "account_tier" {
@@ -60,6 +59,21 @@ variable "container_retention_days" {
   description = "Number of days to retain deleted containers"
   type        = number
   default     = 7
+}
+
+variable "region_short" {
+  description = "Short region code for CAF resource naming (e.g. weu, eus2)"
+  type        = string
+}
+
+variable "enable_public_access" {
+  description = <<-EOT
+    Allow public network access to the Storage Account.
+    Set true for dev (Terraform runs from local machine outside the VNet).
+    Set false for prod (Terraform runs from a private CI runner inside the VNet).
+  EOT
+  type        = bool
+  default     = false
 }
 
 variable "tags" {

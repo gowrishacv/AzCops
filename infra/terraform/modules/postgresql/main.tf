@@ -1,6 +1,7 @@
 ###############################################################################
 # PostgreSQL Flexible Server Module
 # Creates Azure Database for PostgreSQL Flexible Server with private networking
+# CAF: psql-{workload}-{env}-{region}
 ###############################################################################
 
 # ---------------------------------------------------------------------------
@@ -8,7 +9,7 @@
 # ---------------------------------------------------------------------------
 
 resource "azurerm_postgresql_flexible_server" "this" {
-  name                          = "${var.project}-${var.environment}-psql"
+  name                          = "psql-${var.project}-${var.environment}-${var.region_short}"
   resource_group_name           = var.resource_group_name
   location                      = var.location
   version                       = "16"

@@ -1,0 +1,121 @@
+###############################################################################
+# Security Scan — runs on every push / PR
+# Tools: Trivy (container + IaC), Bandit (Python SAST), pip-audit (deps)
+###############################################################################
+name: "Security Scan"
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Run weekly on Monday at 06:00 UTC even without code changes
+    - cron: "0 6 * * 1"
+
+permissions:
+  contents: read
+  security-events: write   # upload SARIF results to GitHub Security tab
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Trivy — IaC scan (Terraform)
+  # ---------------------------------------------------------------------------
+  trivy-iac:
+    name: "Trivy IaC Scan"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Trivy (IaC)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: config
+          scan-ref: infra/terraform/
+          format: sarif
+          output: trivy-iac.sarif
+          severity: HIGH,CRITICAL
+          exit-code: 0   # don't fail — upload results for review
+
+      - name: Upload Trivy IaC SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: trivy-iac.sarif
+          category: trivy-iac
+
+  # ---------------------------------------------------------------------------
+  # Bandit — Python SAST
+  # ---------------------------------------------------------------------------
+  bandit:
+    name: "Bandit Python SAST"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Bandit
+        run: pip install bandit[sarif]
+
+      - name: Run Bandit
+        working-directory: src/api
+        run: |
+          bandit -r app/ \
+            --severity-level medium \
+            -f sarif \
+            -o bandit.sarif \
+            --exit-zero
+
+      - name: Upload Bandit SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: src/api/bandit.sarif
+          category: bandit
+
+  # ---------------------------------------------------------------------------
+  # pip-audit — Python dependency vulnerabilities
+  # ---------------------------------------------------------------------------
+  pip-audit:
+    name: "pip-audit"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/api
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pip-audit
+        run: pip install pip-audit
+
+      - name: Audit dependencies
+        run: pip-audit --requirement <(pip install -e . --dry-run 2>/dev/null | grep '^\-\-' || echo "")
+        continue-on-error: true
+
+  # ---------------------------------------------------------------------------
+  # npm audit — Node.js dependency vulnerabilities
+  # ---------------------------------------------------------------------------
+  npm-audit:
+    name: "npm audit"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/ui
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Audit (high severity only)
+        run: npm audit --audit-level=high
+        continue-on-error: true

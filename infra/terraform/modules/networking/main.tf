@@ -1,14 +1,17 @@
 ###############################################################################
 # Networking Module
 # Creates VNet, Subnets, NSGs, and Private DNS Zones for AzCops platform
+# Naming follows Microsoft Cloud Adoption Framework (CAF):
+# https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-abbreviations
 ###############################################################################
 
 # ---------------------------------------------------------------------------
 # Virtual Network
+# CAF: vnet-{workload}-{env}-{region}
 # ---------------------------------------------------------------------------
 
 resource "azurerm_virtual_network" "this" {
-  name                = "${var.project}-${var.environment}-vnet"
+  name                = "vnet-${var.project}-${var.environment}-${var.region_short}"
   location            = var.location
   resource_group_name = var.resource_group_name
   address_space       = [var.vnet_address_space]
@@ -17,17 +20,18 @@ resource "azurerm_virtual_network" "this" {
 
 # ---------------------------------------------------------------------------
 # Subnets
+# CAF: snet-{role}-{workload}-{env}
 # ---------------------------------------------------------------------------
 
 resource "azurerm_subnet" "api" {
-  name                 = "${var.project}-${var.environment}-api-subnet"
+  name                 = "snet-api-${var.project}-${var.environment}"
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.this.name
   address_prefixes     = [var.subnet_prefixes["api"]]
 }
 
 resource "azurerm_subnet" "db" {
-  name                 = "${var.project}-${var.environment}-db-subnet"
+  name                 = "snet-db-${var.project}-${var.environment}"
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.this.name
   address_prefixes     = [var.subnet_prefixes["db"]]
@@ -45,14 +49,14 @@ resource "azurerm_subnet" "db" {
 }
 
 resource "azurerm_subnet" "storage" {
-  name                 = "${var.project}-${var.environment}-storage-subnet"
+  name                 = "snet-storage-${var.project}-${var.environment}"
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.this.name
   address_prefixes     = [var.subnet_prefixes["storage"]]
 }
 
 resource "azurerm_subnet" "app" {
-  name                 = "${var.project}-${var.environment}-app-subnet"
+  name                 = "snet-app-${var.project}-${var.environment}"
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.this.name
   address_prefixes     = [var.subnet_prefixes["app"]]
@@ -71,10 +75,11 @@ resource "azurerm_subnet" "app" {
 
 # ---------------------------------------------------------------------------
 # Network Security Groups
+# CAF: nsg-{role}-{workload}-{env}
 # ---------------------------------------------------------------------------
 
 resource "azurerm_network_security_group" "api" {
-  name                = "${var.project}-${var.environment}-api-nsg"
+  name                = "nsg-api-${var.project}-${var.environment}"
   location            = var.location
   resource_group_name = var.resource_group_name
   tags                = var.tags
@@ -105,7 +110,7 @@ resource "azurerm_network_security_group" "api" {
 }
 
 resource "azurerm_network_security_group" "db" {
-  name                = "${var.project}-${var.environment}-db-nsg"
+  name                = "nsg-db-${var.project}-${var.environment}"
   location            = var.location
   resource_group_name = var.resource_group_name
   tags                = var.tags
@@ -136,7 +141,7 @@ resource "azurerm_network_security_group" "db" {
 }
 
 resource "azurerm_network_security_group" "storage" {
-  name                = "${var.project}-${var.environment}-storage-nsg"
+  name                = "nsg-storage-${var.project}-${var.environment}"
   location            = var.location
   resource_group_name = var.resource_group_name
   tags                = var.tags
@@ -167,7 +172,7 @@ resource "azurerm_network_security_group" "storage" {
 }
 
 resource "azurerm_network_security_group" "app" {
-  name                = "${var.project}-${var.environment}-app-nsg"
+  name                = "nsg-app-${var.project}-${var.environment}"
   location            = var.location
   resource_group_name = var.resource_group_name
   tags                = var.tags
@@ -223,6 +228,7 @@ resource "azurerm_subnet_network_security_group_association" "app" {
 
 # ---------------------------------------------------------------------------
 # Private DNS Zones
+# NOTE: DNS zone names are Microsoft-mandated FQDNs — they cannot be renamed
 # ---------------------------------------------------------------------------
 
 resource "azurerm_private_dns_zone" "postgresql" {
@@ -245,10 +251,11 @@ resource "azurerm_private_dns_zone" "dfs" {
 
 # ---------------------------------------------------------------------------
 # Private DNS Zone <-> VNet Links
+# CAF: dnslink-{zone}-{workload}-{env}
 # ---------------------------------------------------------------------------
 
 resource "azurerm_private_dns_zone_virtual_network_link" "postgresql" {
-  name                  = "${var.project}-${var.environment}-postgresql-dns-link"
+  name                  = "dnslink-psql-${var.project}-${var.environment}"
   resource_group_name   = var.resource_group_name
   private_dns_zone_name = azurerm_private_dns_zone.postgresql.name
   virtual_network_id    = azurerm_virtual_network.this.id
@@ -257,7 +264,7 @@ resource "azurerm_private_dns_zone_virtual_network_link" "postgresql" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "keyvault" {
-  name                  = "${var.project}-${var.environment}-keyvault-dns-link"
+  name                  = "dnslink-kv-${var.project}-${var.environment}"
   resource_group_name   = var.resource_group_name
   private_dns_zone_name = azurerm_private_dns_zone.keyvault.name
   virtual_network_id    = azurerm_virtual_network.this.id
@@ -266,7 +273,7 @@ resource "azurerm_private_dns_zone_virtual_network_link" "keyvault" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "dfs" {
-  name                  = "${var.project}-${var.environment}-dfs-dns-link"
+  name                  = "dnslink-dfs-${var.project}-${var.environment}"
   resource_group_name   = var.resource_group_name
   private_dns_zone_name = azurerm_private_dns_zone.dfs.name
   virtual_network_id    = azurerm_virtual_network.this.id

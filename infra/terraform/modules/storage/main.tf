@@ -1,6 +1,8 @@
 ###############################################################################
 # Storage Module
 # Creates Azure Storage Account with Data Lake Gen2 and private endpoint
+# CAF: st{workload}{env}{region} — NO hyphens, all lowercase, max 24 chars
+#   stazcopsdevweu = 14 chars (within limit)
 ###############################################################################
 
 # ---------------------------------------------------------------------------
@@ -8,7 +10,7 @@
 # ---------------------------------------------------------------------------
 
 resource "azurerm_storage_account" "this" {
-  name                          = replace("${var.project}${var.environment}sa", "-", "")
+  name                          = replace("st${var.project}${var.environment}${var.region_short}", "-", "")
   resource_group_name           = var.resource_group_name
   location                      = var.location
   account_tier                  = var.account_tier
@@ -16,7 +18,9 @@ resource "azurerm_storage_account" "this" {
   account_kind                  = "StorageV2"
   is_hns_enabled                = true # Enable Data Lake Gen2
   min_tls_version               = "TLS1_2"
-  public_network_access_enabled = false
+  # true  → dev:  Terraform creates the raw filesystem from the local machine
+  # false → prod: Terraform runs from a private CI runner inside the VNet
+  public_network_access_enabled = var.enable_public_access
 
   blob_properties {
     delete_retention_policy {
@@ -42,10 +46,11 @@ resource "azurerm_storage_data_lake_gen2_filesystem" "raw" {
 
 # ---------------------------------------------------------------------------
 # Private Endpoint for DFS (Data Lake Storage)
+# CAF: pep-{resource}-{workload}-{env}
 # ---------------------------------------------------------------------------
 
 resource "azurerm_private_endpoint" "dfs" {
-  name                = "${var.project}-${var.environment}-dfs-pe"
+  name                = "pep-dfs-${var.project}-${var.environment}"
   location            = var.location
   resource_group_name = var.resource_group_name
   subnet_id           = var.subnet_id
@@ -67,9 +72,12 @@ resource "azurerm_private_endpoint" "dfs" {
 # ---------------------------------------------------------------------------
 # Role Assignment - Grant managed identity access to storage
 # ---------------------------------------------------------------------------
+# NOTE: count/for_each conditionals require values known at plan time.
+# Since managed_identity_principal_id is a downstream module output
+# (unknown until apply), we use a plain resource with no conditional.
+# Terraform resolves the dependency graph and applies this after identity.
 
 resource "azurerm_role_assignment" "storage_blob_data_contributor" {
-  count                = var.managed_identity_principal_id != "" ? 1 : 0
   scope                = azurerm_storage_account.this.id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = var.managed_identity_principal_id
