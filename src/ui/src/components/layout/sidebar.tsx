@@ -1,14 +1,16 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BarChart3, DollarSign, Lightbulb, Server, Settings, Shield } from 'lucide-react';
+import { BarChart3, DollarSign, Download, Lightbulb, Server, Settings, Shield } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { UserProfile } from '@/components/auth/user-profile';
 
 const nav = [
   { href: '/dashboard', label: 'Overview', icon: BarChart3 },
   { href: '/dashboard/costs', label: 'Cost Analysis', icon: DollarSign },
   { href: '/dashboard/recommendations', label: 'Recommendations', icon: Lightbulb },
   { href: '/dashboard/resources', label: 'Resources', icon: Server },
+  { href: '/dashboard/ingestion', label: 'Ingestion', icon: Download },
   { href: '/dashboard/settings', label: 'Settings', icon: Settings },
 ];
 
@@ -31,7 +33,9 @@ export function Sidebar() {
               href={href}
               className={cn(
                 'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors',
-                active ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+                active
+                  ? 'bg-primary text-primary-foreground'
+                  : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground',
               )}
             >
               <Icon className="h-4 w-4" />
@@ -40,8 +44,9 @@ export function Sidebar() {
           );
         })}
       </nav>
-      {/* User */}
-      <div className="border-t p-4">
+      {/* User profile + version */}
+      <div className="border-t p-4 space-y-3">
+        <UserProfile />
         <p className="text-xs text-muted-foreground">AzCops Platform v0.1</p>
       </div>
     </aside>

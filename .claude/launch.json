@@ -28,8 +28,8 @@
     },
     {
       "name": "ui",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeExecutable": "/bin/bash",
+      "runtimeArgs": ["-c", "cd '/Users/gowrisha/Library/Mobile Documents/com~apple~CloudDocs/LifeOS/01_Projects/Active/AzCops/.claude/worktrees/romantic-hoover/src/ui' && npm run dev"],
       "port": 3000
     }
   ]
