@@ -17,37 +17,51 @@ const nav = [
 export function Sidebar() {
   const pathname = usePathname();
   return (
-    <aside className="flex h-screen w-64 flex-col border-r bg-card">
+    <aside className="flex h-screen w-64 flex-col border-r border-border/50 bg-gradient-to-b from-slate-50 to-white">
       {/* Logo */}
-      <div className="flex h-16 items-center border-b px-6">
-        <Shield className="h-6 w-6 text-primary mr-2" />
-        <span className="text-lg font-bold">AzCops</span>
+      <div className="flex h-16 items-center border-b border-border/50 px-6">
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 shadow-lg shadow-blue-500/25">
+          <Shield className="h-4 w-4 text-white" />
+        </div>
+        <span className="ml-2.5 text-lg font-bold tracking-tight">AzCops</span>
+        <span className="ml-2 inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-2 py-0.5 text-[10px] font-medium text-blue-700">
+          v0.1
+        </span>
       </div>
       {/* Nav */}
       <nav className="flex-1 space-y-1 p-4">
         {nav.map(({ href, label, icon: Icon }) => {
-          const active = pathname === href || pathname.startsWith(href + '/');
+          const active =
+            href === '/dashboard'
+              ? pathname === '/dashboard'
+              : pathname === href || pathname.startsWith(href + '/');
           return (
             <Link
               key={href}
               href={href}
               className={cn(
-                'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200',
                 active
-                  ? 'bg-primary text-primary-foreground'
-                  : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground',
+                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/25'
+                  : 'text-muted-foreground hover:bg-accent/80 hover:text-foreground hover:translate-x-0.5',
               )}
             >
-              <Icon className="h-4 w-4" />
+              <Icon className={cn('h-4 w-4', active && 'drop-shadow-sm')} />
               {label}
+              {active && (
+                <div className="ml-auto h-1.5 w-1.5 rounded-full bg-white/80" />
+              )}
             </Link>
           );
         })}
       </nav>
       {/* User profile + version */}
-      <div className="border-t p-4 space-y-3">
+      <div className="border-t border-border/50 p-4 space-y-3">
         <UserProfile />
-        <p className="text-xs text-muted-foreground">AzCops Platform v0.1</p>
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse-soft" />
+          AzCops Platform v0.1
+        </div>
       </div>
     </aside>
   );

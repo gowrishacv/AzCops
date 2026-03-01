@@ -1,20 +1,19 @@
 'use client';
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { CheckCircle, XCircle, EyeOff, Download } from 'lucide-react';
+import { CheckCircle, XCircle, EyeOff, Download, Lightbulb } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Select } from '@/components/ui/select';
 import { Header } from '@/components/layout/header';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { recommendationsApi, type Recommendation } from '@/lib/api';
-import { formatCurrency } from '@/lib/utils';
+import { cn, formatCurrency } from '@/lib/utils';
 
-const STATUS_OPTIONS = ['open', 'approved', 'rejected', 'dismissed', 'executed'];
-const CATEGORY_OPTIONS = ['waste', 'rightsizing', 'rate_optimization', 'governance'];
-const RISK_OPTIONS = ['low', 'medium', 'high'];
+const STATUS_OPTIONS = ['open', 'approved', 'rejected', 'executed', 'dismissed'];
+const CATEGORY_OPTIONS = ['waste_detection', 'right_sizing', 'rate_optimization', 'governance'];
+const RISK_OPTIONS = ['low', 'medium', 'high'] as const;
 
 const statusVariant: Record<string, 'default' | 'success' | 'destructive' | 'secondary' | 'warning' | 'outline'> = {
   open: 'default',
@@ -37,7 +36,7 @@ function exportCsv(recs: Recommendation[]) {
     'short_description', 'resource_id',
   ];
   const rows = recs.map((r) =>
-    headers.map((h) => JSON.stringify((r as Record<string, unknown>)[h] ?? '')).join(',')
+    headers.map((h) => JSON.stringify((r as unknown as Record<string, unknown>)[h] ?? '')).join(',')
   );
   const csv = [headers.join(','), ...rows].join('\n');
   const blob = new Blob([csv], { type: 'text/csv' });
@@ -48,6 +47,42 @@ function exportCsv(recs: Recommendation[]) {
   a.click();
   URL.revokeObjectURL(url);
 }
+
+function FilterPill({
+  label,
+  active,
+  onClick,
+  variant,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+  variant?: 'green' | 'amber' | 'red';
+}) {
+  let activeClasses = 'bg-foreground text-background';
+  if (variant === 'green' && active) activeClasses = 'bg-emerald-600 text-white';
+  if (variant === 'amber' && active) activeClasses = 'bg-amber-500 text-white';
+  if (variant === 'red' && active) activeClasses = 'bg-red-600 text-white';
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        'rounded-full px-3 py-1 text-xs font-medium transition-all',
+        active ? activeClasses : 'bg-muted text-muted-foreground hover:bg-muted/80'
+      )}
+    >
+      {label}
+    </button>
+  );
+}
+
+const riskPillVariant: Record<string, 'green' | 'amber' | 'red'> = {
+  low: 'green',
+  medium: 'amber',
+  high: 'red',
+};
 
 export default function RecommendationsPage() {
   const [status, setStatus] = useState('');
@@ -76,6 +111,7 @@ export default function RecommendationsPage() {
   const dismissMut = useMutation({ mutationFn: (id: string) => recommendationsApi.dismiss(id), ...mutOpts });
 
   const totalSavings = data?.items.reduce((s, r) => s + r.estimated_monthly_savings, 0) ?? 0;
+  const total = data?.total ?? 0;
 
   return (
     <div className="flex flex-col">
@@ -85,51 +121,79 @@ export default function RecommendationsPage() {
       />
       <div className="flex-1 p-6 space-y-4">
         {/* Summary banner */}
-        {data && data.total > 0 && (
-          <div className="rounded-lg bg-green-50 border border-green-200 px-4 py-3 flex items-center justify-between">
-            <p className="text-sm text-green-800 font-medium">
-              {data.total} recommendation{data.total !== 1 ? 's' : ''} found
-            </p>
-            <p className="text-sm font-bold text-green-700">
-              Potential savings: {formatCurrency(totalSavings)}/month
-            </p>
+        {data && total > 0 && (
+          <div className="rounded-xl bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-200/60 px-5 py-4 flex items-center justify-between shadow-sm">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-100">
+                <Lightbulb className="h-5 w-5 text-emerald-600" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-emerald-800">{total} recommendations found</p>
+                <p className="text-xs text-emerald-600">Review and action to reduce spend</p>
+              </div>
+            </div>
+            <div className="text-right">
+              <p className="text-2xl font-bold text-emerald-700">{formatCurrency(totalSavings)}</p>
+              <p className="text-xs text-emerald-600">potential savings/month</p>
+            </div>
           </div>
         )}
 
-        {/* Filters */}
-        <div className="flex flex-wrap gap-3 items-center">
-          <Select
-            value={status}
-            onChange={(e) => { setStatus(e.target.value); setPage(1); }}
-            className="w-40"
-          >
-            <option value="">All Statuses</option>
+        {/* Filter pills */}
+        <div className="flex flex-wrap items-center gap-4">
+          {/* Status filters */}
+          <div className="flex flex-wrap gap-2 items-center">
+            <span className="text-sm font-medium text-muted-foreground mr-1">Status:</span>
+            <FilterPill
+              label="All"
+              active={status === ''}
+              onClick={() => { setStatus(''); setPage(1); }}
+            />
             {STATUS_OPTIONS.map((s) => (
-              <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>
+              <FilterPill
+                key={s}
+                label={s.charAt(0).toUpperCase() + s.slice(1)}
+                active={status === s}
+                onClick={() => { setStatus(status === s ? '' : s); setPage(1); }}
+              />
             ))}
-          </Select>
+          </div>
 
-          <Select
-            value={category}
-            onChange={(e) => { setCategory(e.target.value); setPage(1); }}
-            className="w-48"
-          >
-            <option value="">All Categories</option>
+          <div className="h-6 w-px bg-border" />
+
+          {/* Category filters */}
+          <div className="flex flex-wrap gap-2 items-center">
+            <span className="text-sm font-medium text-muted-foreground mr-1">Category:</span>
+            <FilterPill
+              label="All"
+              active={category === ''}
+              onClick={() => { setCategory(''); setPage(1); }}
+            />
             {CATEGORY_OPTIONS.map((c) => (
-              <option key={c} value={c}>{c.replace('_', ' ')}</option>
+              <FilterPill
+                key={c}
+                label={c.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())}
+                active={category === c}
+                onClick={() => { setCategory(category === c ? '' : c); setPage(1); }}
+              />
             ))}
-          </Select>
+          </div>
 
-          <Select
-            value={riskLevel}
-            onChange={(e) => { setRiskLevel(e.target.value); setPage(1); }}
-            className="w-36"
-          >
-            <option value="">All Risks</option>
+          <div className="h-6 w-px bg-border" />
+
+          {/* Risk filters */}
+          <div className="flex flex-wrap gap-2 items-center">
+            <span className="text-sm font-medium text-muted-foreground mr-1">Risk:</span>
             {RISK_OPTIONS.map((r) => (
-              <option key={r} value={r}>{r.charAt(0).toUpperCase() + r.slice(1)}</option>
+              <FilterPill
+                key={r}
+                label={r.charAt(0).toUpperCase() + r.slice(1)}
+                active={riskLevel === r}
+                variant={riskPillVariant[r]}
+                onClick={() => { setRiskLevel(riskLevel === r ? '' : r); setPage(1); }}
+              />
             ))}
-          </Select>
+          </div>
 
           <div className="flex-1" />
 
@@ -145,7 +209,7 @@ export default function RecommendationsPage() {
         </div>
 
         {/* Table */}
-        <Card>
+        <Card className="shadow-sm">
           <CardHeader>
             <CardTitle>
               Recommendations {data ? `(${data.total})` : ''}
@@ -172,7 +236,15 @@ export default function RecommendationsPage() {
                   </TableHeader>
                   <TableBody>
                     {data?.items.map((rec) => (
-                      <TableRow key={rec.id}>
+                      <TableRow
+                        key={rec.id}
+                        className={cn(
+                          'transition-colors',
+                          rec.risk_level === 'high' && 'border-l-2 border-l-red-500',
+                          rec.risk_level === 'medium' && 'border-l-2 border-l-amber-500',
+                          rec.risk_level === 'low' && 'border-l-2 border-l-emerald-500'
+                        )}
+                      >
                         <TableCell>
                           <div>
                             <p className="text-sm font-medium">{rec.short_description}</p>
@@ -181,7 +253,7 @@ export default function RecommendationsPage() {
                         </TableCell>
                         <TableCell>
                           <span className="text-xs capitalize">
-                            {rec.category.replace('_', ' ')}
+                            {rec.category.replace(/_/g, ' ')}
                           </span>
                         </TableCell>
                         <TableCell>
@@ -247,29 +319,31 @@ export default function RecommendationsPage() {
 
                 {/* Pagination */}
                 {data && data.pages > 1 && (
-                  <div className="flex items-center justify-between mt-4 pt-4 border-t">
-                    <p className="text-sm text-muted-foreground">
-                      Page {data.page} of {data.pages} ({data.total} total)
-                    </p>
-                    <div className="flex gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setPage((p) => Math.max(1, p - 1))}
-                        disabled={page === 1}
-                      >
-                        Previous
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setPage((p) => p + 1)}
-                        disabled={page >= data.pages}
-                      >
-                        Next
-                      </Button>
-                    </div>
-                  </div>
+                  <Card className="shadow-sm mt-4 border-0 border-t rounded-none">
+                    <CardContent className="flex items-center justify-between py-4 px-0">
+                      <p className="text-sm text-muted-foreground">
+                        Page {data.page} of {data.pages} ({data.total} total)
+                      </p>
+                      <div className="flex gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setPage((p) => Math.max(1, p - 1))}
+                          disabled={page === 1}
+                        >
+                          Previous
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setPage((p) => p + 1)}
+                          disabled={page >= data.pages}
+                        >
+                          Next
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
                 )}
               </>
             )}
