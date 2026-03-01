@@ -2,12 +2,13 @@
 
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { Download, Play, RefreshCw, Zap, Clock, CheckCircle, XCircle, AlertTriangle } from 'lucide-react';
+import { Download, Play, RefreshCw, Zap, Clock, CheckCircle, XCircle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Header } from '@/components/layout/header';
 import { recommendationsApi } from '@/lib/api';
+import { cn } from '@/lib/utils';
 
 /* ---------- status badge helper ---------- */
 const statusConfig: Record<string, { variant: 'default' | 'success' | 'destructive' | 'warning' | 'secondary'; icon: React.ElementType }> = {
@@ -56,7 +57,7 @@ export default function IngestionPage() {
     });
   };
 
-  /* ── Rule Engine mutation ─────────────────── */
+  /* -- Rule Engine mutation -- */
   const generateMutation = useMutation({
     mutationFn: () => recommendationsApi.generate(),
     onMutate: () => {
@@ -75,11 +76,12 @@ export default function IngestionPage() {
       <Header title="Ingestion & Rules" description="Manage data ingestion and rule engine runs" />
 
       <div className="flex-1 p-6 space-y-6">
-        {/* ── Action Cards ────────────────────── */}
+        {/* -- Action Cards -- */}
         <div className="grid gap-6 md:grid-cols-2">
           {/* Data Ingestion */}
-          <Card>
-            <CardHeader>
+          <Card className="relative overflow-hidden shadow-sm">
+            <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-500 to-indigo-500" />
+            <CardHeader className="pt-5">
               <CardTitle className="flex items-center gap-2">
                 <Download className="h-5 w-5 text-primary" />
                 Data Ingestion
@@ -119,8 +121,9 @@ export default function IngestionPage() {
           </Card>
 
           {/* Rule Engine */}
-          <Card>
-            <CardHeader>
+          <Card className="relative overflow-hidden shadow-sm">
+            <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-emerald-500 to-green-500" />
+            <CardHeader className="pt-5">
               <CardTitle className="flex items-center gap-2">
                 <Zap className="h-5 w-5 text-primary" />
                 Rule Engine
@@ -168,8 +171,8 @@ export default function IngestionPage() {
           </Card>
         </div>
 
-        {/* ── Activity Log ────────────────────── */}
-        <Card>
+        {/* -- Activity Log -- */}
+        <Card className="shadow-sm">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Clock className="h-5 w-5 text-muted-foreground" />
@@ -179,23 +182,34 @@ export default function IngestionPage() {
           </CardHeader>
           <CardContent>
             {logs.length === 0 ? (
-              <div className="flex flex-col items-center justify-center py-12 text-center">
-                <AlertTriangle className="h-8 w-8 text-muted-foreground/50 mb-3" />
-                <p className="text-sm text-muted-foreground">No activity yet.</p>
-                <p className="text-xs text-muted-foreground mt-1">
+              <div className="flex flex-col items-center justify-center py-16 text-center">
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-muted/50 mb-4">
+                  <Clock className="h-8 w-8 text-muted-foreground/40" />
+                </div>
+                <p className="text-sm font-medium text-muted-foreground">No activity yet</p>
+                <p className="text-xs text-muted-foreground mt-1 max-w-xs">
                   Run the rule engine or trigger an ingestion to see activity here.
                 </p>
               </div>
             ) : (
-              <div className="space-y-3">
+              <div className="relative space-y-0">
+                {/* Vertical line */}
+                {logs.length > 0 && <div className="absolute left-[15px] top-2 bottom-2 w-px bg-border" />}
+
                 {logs.map((log) => (
-                  <div
-                    key={log.id}
-                    className="flex items-start gap-3 rounded-lg border p-3"
-                  >
-                    <StatusBadge status={log.status} />
+                  <div key={log.id} className="relative flex items-start gap-4 py-3 pl-8">
+                    {/* Timeline dot */}
+                    <div className={cn(
+                      'absolute left-[11px] top-[18px] h-2.5 w-2.5 rounded-full ring-4 ring-background',
+                      log.status === 'completed' ? 'bg-green-500' :
+                      log.status === 'failed' ? 'bg-red-500' :
+                      log.status === 'running' ? 'bg-amber-500 animate-pulse' : 'bg-muted-foreground'
+                    )} />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium">{log.action}</p>
+                      <div className="flex items-center gap-2">
+                        <p className="text-sm font-medium">{log.action}</p>
+                        <StatusBadge status={log.status} />
+                      </div>
                       <p className="text-xs text-muted-foreground mt-0.5">{log.message}</p>
                     </div>
                     <time className="text-xs text-muted-foreground shrink-0">
