@@ -1,16 +1,9 @@
-Subject: Frage zu Freiwilligenprogramm 2026 und möglichem Sozialplan
 Sehr geehrtes Betriebsratsteam,
-ich habe ein Angebot im Rahmen des “Freiwilligenprogramm Restrukturierung 2026” erhalten und prüfe derzeit meine Optionen.
 
-Ich hätte dazu ein paar Fragen. Wird aktuell ein Sozialplan für “Restrukturierung 2026” verhandelt, unabhängig vom Freiwilligenprogramm? Falls ja, in welchem Stadium befindet sich das, und gibt es einen groben Zeitrahmen?
+vielen Dank für die schnelle und ausführliche Rückmeldung. Das hilft mir sehr bei meiner Entscheidung.
 
-Außerdem würde mich interessieren, nach welcher Formel sich die Abfindung im Freiwilligenprogramm berechnet, und ob das mit den üblichen Sozialplan-Konditionen vergleichbar ist.
-
-Über eine kurze Rückmeldung würde ich mich sehr freuen.
-
-Vielen Dank und freundliche Grüße
-Gowrisha Chikkanayakanahalli Vishwa Kumar
-
+Freundliche Grüße
+Gowrisha C. Vishwa Kumar
 
 
 # Azure Enterprise Cost Optimization Platform
