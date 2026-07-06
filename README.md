@@ -1,4 +1,4 @@
-
+Subject: Frage zu Freiwilligenprogramm 2026 und möglichem Sozialplan
 
 ich habe ein Angebot im Rahmen des “Freiwilligenprogramm Restrukturierung 2026” erhalten und prüfe derzeit meine Optionen.
 
