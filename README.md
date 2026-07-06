@@ -1,10 +1,13 @@
-Sehr geehrtes Betriebsratsteam,
+Dear Mr. Münz,
 
-vielen Dank für die schnelle und ausführliche Rückmeldung. Das hilft mir sehr bei meiner Entscheidung.
+Please see below the response I received from the Betriebsrat.
 
-Freundliche Grüße
-Gowrisha C. Vishwa Kumar
+Key points: a Sozialplan has been negotiated but not yet signed by the employer, with no fixed timeline. It’s expected no earlier than August 1, 2026, after my current acceptance deadline. They also confirmed the Sozialplan calculations match the Freiwilligenprogramm calculations exactly.
 
+Let me know your thoughts once you’ve had a chance to review.
+
+Best regards,
+Gowrisha Chikkanayakanahalli Vishwa Kumar
 
 # Azure Enterprise Cost Optimization Platform
 
