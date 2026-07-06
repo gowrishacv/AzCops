@@ -1,14 +1,11 @@
 Dear Mr. Münz,
 
-Please see below the response I received from the Betriebsrat.
+Thank you. On the unemployment benefits point, could you give me your assessment of how likely a Sperrzeit is in my specific case? The contract states the termination is for operational reasons (“betriebsbedingt”), and I understand that framing typically carries lower Sperrzeit risk than a standard Aufhebungsvertrag with no business justification.
 
-Key points: a Sozialplan has been negotiated but not yet signed by the employer, with no fixed timeline. It’s expected no earlier than August 1, 2026, after my current acceptance deadline. They also confirmed the Sozialplan calculations match the Freiwilligenprogramm calculations exactly.
-
-Let me know your thoughts once you’ve had a chance to review.
+Given the acceptance deadline is July 21, I’d like to make a fully informed decision before then.
 
 Best regards,
 Gowrisha Chikkanayakanahalli Vishwa Kumar
-
 # Azure Enterprise Cost Optimization Platform
 
 An enterprise-grade, multi-tenant Azure Cost Optimization platform designed for FinOps teams, Cloud Architects, and Managed Service Providers.
