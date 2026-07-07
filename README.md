@@ -1,8 +1,8 @@
-Dear Mr. Münz,
+Dear Jenny,
 
-Thank you. On the unemployment benefits point, could you give me your assessment of how likely a Sperrzeit is in my specific case? The contract states the termination is for operational reasons (“betriebsbedingt”), and I understand that framing typically carries lower Sperrzeit risk than a standard Aufhebungsvertrag with no business justification.
+My lawyer, Mr. Joachim Münz, would like to discuss a potential alternative structure for my termination agreement with someone at HR. Could you let me know who the right contact person is, or should he reach out to you directly?
 
-Given the acceptance deadline is July 21, I’d like to make a fully informed decision before then.
+His contact details: Joachim Münz, +49 177 6325458, j.muenz@kanzlei-muenz.de
 
 Best regards,
 Gowrisha Chikkanayakanahalli Vishwa Kumar
