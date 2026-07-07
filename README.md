@@ -1,11 +1,8 @@
-Dear Jenny,
+Dear Mr. Münz,
 
-My lawyer, Mr. Joachim Münz, would like to discuss a potential alternative structure for my termination agreement with someone at HR. Could you let me know who the right contact person is, or should he reach out to you directly?
-
-His contact details: Joachim Münz, +49 177 6325458, j.muenz@kanzlei-muenz.de
+I’ve reached out to HR asking who the right contact person is for you to discuss this with. I haven’t heard back yet, but I’ll forward their response as soon as I get it.
 
 Best regards,
-Gowrisha Chikkanayakanahalli Vishwa Kumar
 # Azure Enterprise Cost Optimization Platform
 
 An enterprise-grade, multi-tenant Azure Cost Optimization platform designed for FinOps teams, Cloud Architects, and Managed Service Providers.
