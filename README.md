@@ -1,4 +1,4 @@
-Dear Mr. Münz,
+I checked with HR. They’ve told me they are not able to speak directly with a lawyer regarding this matter.
 
 I checked with HR. Unfortunately, they’re not open to being contacted directly by a lawyer, this seems to be unusual for them and not something they want to do.
 
