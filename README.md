@@ -1,22 +1,4 @@
 
-
-
-
-
-Subject: Request for Interim Reference Letter (Zwischenzeugnis)
-
-Good morning,
-
-I would like to request an interim reference letter (Zwischenzeugnis). Could you please send me the relevant template?
-
-Thank you,
-Gowrisha Chikkanayakanahalli Vishwa Kumar
-Rechtsanwalt Joachim Münz
--Fachanwalt für Arbeitsrecht-
-
-
-
-
 # Azure Enterprise Cost Optimization Platform
 
 An enterprise-grade, multi-tenant Azure Cost Optimization platform designed for FinOps teams, Cloud Architects, and Managed Service Providers.
