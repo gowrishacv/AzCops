@@ -1,24 +1,16 @@
 
 
-Dear Mr. Münz,
-
-I’ve sent the request to HR regarding the Kündigung/Vergleich structure, using the wording you provided. I’ll let you know once I hear back.
-
-Best regards
-
-Ich möchte das Angebot gerne annehmen und insbesondere von dem Freiwilligenbonus profitieren.
-Allerdings würde dies bedeuten, dass ich wegen der Höhe der Abfindung eine Sperrzeit für den Bezug von Arbeitslosengeld bekommen würde.
-Das kann ich mir jedoch nicht erlauben.
-Ich bitte daher zu prüfen, ob eine Kündigung ausgesprochen werden kann und anschließend, in einem Kündigungsschutzprozess im schriftlichen Verfahren ein dem Aufhebungsvertrag inhaltlich entsprechender Vergleich geschlossen werden kann. Ich werde meinen Anwalt entsprechend instruieren.
-
-I would like to accept the offer, in particular to take advantage of the voluntary bonus. However, this would mean that, due to the amount of the severance payment, I would receive a suspension period for unemployment benefits. Unfortunately, I cannot afford that.
-
-I therefore ask you to examine whether a dismissal can be issued and, subsequently, whether a settlement corresponding in substance to the termination agreement can be concluded in writing as part of an dismissal proceeding. I will instruct my lawyer accordingly.
-
-Beste Grüße
-Joachim Münz
 
 
+
+Subject: Request for Interim Reference Letter (Zwischenzeugnis)
+
+Good morning,
+
+I would like to request an interim reference letter (Zwischenzeugnis). Could you please send me the relevant template?
+
+Thank you,
+Gowrisha Chikkanayakanahalli Vishwa Kumar
 Rechtsanwalt Joachim Münz
 -Fachanwalt für Arbeitsrecht-
 
