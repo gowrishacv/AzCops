@@ -1,4 +1,10 @@
-Good morning, please ask this question:
+
+
+Dear Mr. Münz,
+
+I’ve sent the request to HR regarding the Kündigung/Vergleich structure, using the wording you provided. I’ll let you know once I hear back.
+
+Best regards
 
 Ich möchte das Angebot gerne annehmen und insbesondere von dem Freiwilligenbonus profitieren.
 Allerdings würde dies bedeuten, dass ich wegen der Höhe der Abfindung eine Sperrzeit für den Bezug von Arbeitslosengeld bekommen würde.
