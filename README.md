@@ -1,11 +1,3 @@
-Hi Jenny, separate question from before. Since I’m currently job searching, would it be possible to get an interim reference letter (Zwischenzeugnis) now?
-
-I checked with HR. Unfortunately, they’re not open to being contacted directly by a lawyer, this seems to be unusual for them and not something they want to do.
-
-Given that, how would you like to proceed? If you could outline the proposed structure in writing, I can relay it to HR myself and get their response.
-
-Best regards,
-Gowrisha Chikkanayakanahalli Vishwa Kumar,
 # Azure Enterprise Cost Optimization Platform
 
 An enterprise-grade, multi-tenant Azure Cost Optimization platform designed for FinOps teams, Cloud Architects, and Managed Service Providers.
