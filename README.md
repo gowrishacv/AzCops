@@ -1,8 +1,11 @@
 Dear Mr. Münz,
 
-I’ve reached out to HR asking who the right contact person is for you to discuss this with. I haven’t heard back yet, but I’ll forward their response as soon as I get it.
+I checked with HR. Unfortunately, they’re not open to being contacted directly by a lawyer, this seems to be unusual for them and not something they want to do.
+
+Given that, how would you like to proceed? If you could outline the proposed structure in writing, I can relay it to HR myself and get their response.
 
 Best regards,
+Gowrisha Chikkanayakanahalli Vishwa Kumar,
 # Azure Enterprise Cost Optimization Platform
 
 An enterprise-grade, multi-tenant Azure Cost Optimization platform designed for FinOps teams, Cloud Architects, and Managed Service Providers.
