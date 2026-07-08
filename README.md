@@ -1,4 +1,4 @@
-I checked with HR. They’ve told me they are not able to speak directly with a lawyer regarding this matter.
+Hi Jenny, separate question from before. Since I’m currently job searching, would it be possible to get an interim reference letter (Zwischenzeugnis) now?
 
 I checked with HR. Unfortunately, they’re not open to being contacted directly by a lawyer, this seems to be unusual for them and not something they want to do.
 
