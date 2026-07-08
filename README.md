@@ -1,3 +1,10 @@
+Dear Mr. Münz,
+
+I wanted to share this with you, a Works Council statement addressing rumors of a further round of job reductions beyond the current voluntary program. Nothing has been officially confirmed. I wanted your view on whether this changes anything about my situation or timing given my July 21 deadline.
+
+Best regards,
+Gowrisha Chikkanayakanahalli Vishwa Kumar
+
 
 # Azure Enterprise Cost Optimization Platform
 
