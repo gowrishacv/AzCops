@@ -1,3 +1,28 @@
+Works Council Statement Regarding Current Rumors About Further Job Reductions
+
+Dear colleagues,
+
+Over the past few days, many of you have approached the Works Council with questions, concerns, and information regarding rumors that, in addition to the currently ongoing voluntary redundancy program, further positions may be eliminated and that lists of potentially affected employees are already being prepared.
+
+We take these reports very seriously.
+
+At this point, however, the Works Council has not received any official confirmation or information from management regarding such measures. Therefore, we will not present rumors or speculation as established facts.
+At the same time, we want to make our position clear: If management is considering measures that go beyond the current voluntary program and may have an impact on employees, we expect the Works Council to be informed at an early stage and in a comprehensive manner. This is consistent with our statutory information and participation rights under German labor law.
+
+Our commitment is clear:
+•	We are closely monitoring the current situation.
+•	We are in dialogue with management and will actively seek clarification where necessary.
+•	We will consistently exercise our information, consultation, and co-determination rights.
+•	We will keep employees informed as soon as reliable information becomes available.
+•	
+We understand that rumors and uncertainty can be unsettling. For that reason, we are committed to communicating responsibly and sharing only verified information.
+
+We expect management to communicate openly and transparently with both the Works Council and employees. Especially during periods of organizational change, timely communication and early involvement are essential to maintaining trust and avoiding unnecessary uncertainty. If further personnel measures are being considered, we expect these not to become known through rumors or unofficial channels, but to be communicated through a transparent and respectful process that appropriately involves the Works Council.
+
+If you have questions, concerns, or relevant information, please feel free to contact the Works Council in confidence. Any information you share helps us better understand developments and raise the appropriate questions with management.
+We will keep you informed as soon as reliable and confirmed information becomes available.
+
+Your Works Council
 
 # Azure Enterprise Cost Optimization Platform
 
