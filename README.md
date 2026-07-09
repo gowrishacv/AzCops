@@ -12,6 +12,9 @@ An enterprise-grade, multi-tenant Azure Cost Optimization platform designed for 
 
 This solution supports multiple Azure tenants and subscriptions, provides automated cost optimization insights, and enables governed remediation workflows.
 
+Also, I have not yet received a response from HR regarding either the Kündigung/Vergleich proposal or the interim reference letter request.
+
+
 ## Development Guidelines
 
 Please review the AI contribution policy before submitting AI-assisted changes:
