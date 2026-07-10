@@ -1,3 +1,5 @@
+Dear Andreas, thank you for the update and for the open conversation during the process. I appreciate the transparency. Wishing you and the team success with the new colleague. Best regards, Gowrisha
+
 
 # Azure Enterprise Cost Optimization Platform
 
