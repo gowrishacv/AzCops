@@ -1,15 +1,3 @@
-Dear Mr. Münz,
-I had my meeting today with Ms. Tögemann (HR, Santander Consumer Technology Services) about our proposed Kündigung + Vergleich structure.
-She confirmed you can now contact her directly. Her details:
-Jenny Tögemann
-Email: [email address]
-Phone: [phone number]
-Brief status from the meeting: [1–2 sentences on what she said about the Vergleich structure and timeline].
-Please keep the July 21 deadline in mind. Let me know if you need anything else from me before you reach out.
-Best regards
-Gowrisha Chikkanayakanahalli Vishwa Kumar
-
-
 # Azure Enterprise Cost Optimization Platform
 
 An enterprise-grade, multi-tenant Azure Cost Optimization platform designed for FinOps teams, Cloud Architects, and Managed Service Providers.
