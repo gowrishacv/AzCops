@@ -1,6 +1,6 @@
 Dear Mr. Münz,
-thank you for the update and for speaking with Mrs. Tögemann.
-I will check with the Bundesagentur für Arbeit regarding the Sperrzeit and request the answer in writing. I will inform you as soon as I have their response.
+following your advice, I submitted a written inquiry to the Agentur für Arbeit Mönchengladbach today regarding a possible Sperrzeit (§159 SGB III) and Ruhen (§158 SGB III), including the draft Aufhebungsvertrag as attachment. I asked for a timely written reply and referenced the July 21 deadline.
+I will forward their answer as soon as it arrives. I will also try to get a preliminary answer by phone in the meantime.
 Best regards
 Gowrisha Chikkanayakanahalli Vishwa Kumar
 
