@@ -1,3 +1,10 @@
+Dear Mr. Münz,
+thank you for the update and for speaking with Mrs. Tögemann.
+I will check with the Bundesagentur für Arbeit regarding the Sperrzeit and request the answer in writing. I will inform you as soon as I have their response.
+Best regards
+Gowrisha Chikkanayakanahalli Vishwa Kumar
+
+
 # Azure Enterprise Cost Optimization Platform
 
 An enterprise-grade, multi-tenant Azure Cost Optimization platform designed for FinOps teams, Cloud Architects, and Managed Service Providers.
