@@ -1,6 +1,9 @@
 Dear Mr. Münz,
-following your advice, I submitted a written inquiry to the Agentur für Arbeit Mönchengladbach today regarding a possible Sperrzeit (§159 SGB III) and Ruhen (§158 SGB III), including the draft Aufhebungsvertrag as attachment. I asked for a timely written reply and referenced the July 21 deadline.
-I will forward their answer as soon as it arrives. I will also try to get a preliminary answer by phone in the meantime.
+
+short update: HR will not extend the July 21 deadline. My written inquiry to the Bundesagentur is still unanswered, but I have a phone appointment with the Agentur für Arbeit on Monday, July 20 at 11:45 to clarify the Sperrzeit question.
+
+I will inform you right after the call. Depending on their answer, I may need your recommendation on Monday whether to sign or not – I hope you are reachable that afternoon.
+
 Best regards
 Gowrisha Chikkanayakanahalli Vishwa Kumar
 
