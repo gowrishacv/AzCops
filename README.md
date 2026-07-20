@@ -1,3 +1,18 @@
+
+Dear Mr. Münz,
+
+update from my phone appointment with the Agentur für Arbeit today: they confirmed that no answer to my Sperrzeit inquiry will come before the deadline. My written inquiry from July 14 is with the benefits department, but a specialist callback cannot be promised today, and appointments are only available from August.
+
+So I must decide tomorrow without the Agentur's confirmation. My two options:
+
+1. Sign the Aufhebungsvertrag tomorrow (betriebsbedingt, end date 30.09.2026, notice period respected – plus Ms. Tögemann's written statement from Friday that such programs do not automatically lead to a Sperrzeit).
+2. Not sign and go the Sozialplan route.
+
+What is your recommendation? A short call today would help me a lot - I am reachable anytime.
+
+Best regards
+Gowrisha Chikkanayakanahalli Vishwa Kumar
+
 # Azure Enterprise Cost Optimization Platform
 
 An enterprise-grade, multi-tenant Azure Cost Optimization platform designed for FinOps teams, Cloud Architects, and Managed Service Providers.
